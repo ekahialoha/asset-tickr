@@ -1,0 +1,12 @@
+{
+  "name": "asset-tickr",
+  "version": "1.0.0",
+  "description": "Asset and stock tracking manager.",
+  "main": "server.js",
+  "repository": "https://github.com/ekahialoha/asset-tickr",
+  "author": "Christian Kelsom-Martin <christian.kelsommartin@gmail.com>",
+  "license": "GPL-3.0-only",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
