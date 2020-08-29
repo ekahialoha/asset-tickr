@@ -6,7 +6,18 @@
   "repository": "https://github.com/ekahialoha/asset-tickr",
   "author": "Christian Kelsom-Martin <christian.kelsommartin@gmail.com>",
   "license": "GPL-3.0-only",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && yarn run start:prod || yarn run start:dev",
+    "start:prod": "yarn start",
+    "start:dev": "concurrently \"nodemon\" \"cd client && yarn start\"",
+    "install": "cd client && yarn install",
+    "heroku-postbuild": "cd client && yarn run build"
+  },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "if-env": "^1.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0"
   }
 }
