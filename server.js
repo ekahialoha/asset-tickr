@@ -41,7 +41,19 @@ const unsubscribeAll = () => {
 };
 
 socketClient.addEventListener('message', event => {
-
+  if (client !== null) {
+    const data = JSON.parse(event.data);
+    if (data.type !== undefined && data.type !== 'ping') {
+      console.log('Message from server ', data);
+      const s = data.data[0].s;
+      const p = data.data[0].p;
+      if (symbols[s] !== p) {
+        console.log('SENT TO CLIENT');
+        symbols[s] = p;
+        client.send(event.data);
+      }
+    }
+  }
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -75,6 +87,22 @@ app.get('/api/unsubscribe/:symbol', (req, res) => {
   res.json({
     unsubscribed: true,
     symbol: symbol
+  });
+});
+
+app.ws('/stockQuote', (socket) => {
+  client = socket;
+
+  socket.send(JSON.stringify({
+    hello: true
+  }));
+
+  socket.on('message', (msg) => {
+    socket.send(msg);
+  });
+  
+  socket.on('close', (socket, req) =>{
+    client = null;
   });
 });
 
